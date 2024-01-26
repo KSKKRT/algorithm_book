@@ -45,13 +45,29 @@ def solution5_3() -> int:
     return sum(dp[N])
 
 
-def solution5_4():
+def solution5_4() -> None:
     N = int(input())
     a = list(map(int, input().split()))
     W = int(input())
-    dp = [[False for _ in range(W + 1)] for _ in range(N + 1)]
+    K = int(input())
+    dp = [[1 << 60 for _ in range(W + 1)] for _ in range(N + 1)]
+    dp[0][0] = 0
 
+    for i in range(N):
+        for j in range(W + 1):
+            if dp[i][j] < dp[i + 1][j]:
+                dp[i + 1][j] = dp[i][j]
+            if j >= a[i] and dp[i + 1][j] > dp[i][j - a[i]] + 1:
+                dp[i + 1][j] = dp[i + 1][j] + 1
+    print(dp)
+    print('Yes' if dp[N][W] <= K else 'No')
     return
+
+
+def solution5_5() -> None:
+    N = int(input())
+    a = list(map(int, input().split()))
+    W = int(input())
 
 
 def solution5_7() -> str:
@@ -88,4 +104,5 @@ if __name__ == "__main__":
     # print(solution5_1())
     # print(solution5_2())
     # print(solution5_3())
-    print(solution5_7())
+    solution5_4()
+    # print(solution5_7())
